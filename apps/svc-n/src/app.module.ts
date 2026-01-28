@@ -1,7 +1,8 @@
 import { Module } from "@nestjs/common";
-import { DatabaseModule } from "./infra/database/database.module";
-import AppController from "./app.controller";
+import { DatabaseModule } from "./database/drizzle/database.module";
 import { ConfigModule } from "@nestjs/config";
+import { UserModule } from "./users/users.module";
+import { CqrsModule } from "@nestjs/cqrs";
 
 @Module({
     imports:[
@@ -9,7 +10,9 @@ import { ConfigModule } from "@nestjs/config";
             isGlobal: true,
             envFilePath: './.env'
         }),
-        DatabaseModule
+        CqrsModule.forRoot(),
+        DatabaseModule,
+        UserModule,
     ],
     controllers:[],
     providers:[],

@@ -1,12 +1,12 @@
 import { Pool } from "pg";
-import { drizzleSchema } from "./schema";
+import * as schema from "./schema";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { ConfigService } from "@nestjs/config";
 
-export const DRIZZLE = Symbol("DRIZZLE_CONNECTION");
+export const DRIZZLE_СONN_TOKEN = Symbol("DRIZZLE_CONNECTION_TOKEN");
 
 export const drizzleProvider = {
-  provide: DRIZZLE,
+  provide: DRIZZLE_СONN_TOKEN,
   inject: [ConfigService],
   useFactory: async (config: ConfigService) => {
     const dbUrl = config.get<string>('DATABASE_URL')
@@ -19,6 +19,6 @@ export const drizzleProvider = {
       connectionString: dbUrl,
     });
     
-    return drizzle(pool, { schema: drizzleSchema });
+    return drizzle(pool, { schema });
   },
 };
